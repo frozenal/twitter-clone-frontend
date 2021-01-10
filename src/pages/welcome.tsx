@@ -3,7 +3,12 @@ import React from "react";
 interface Props {}
 
 const welcome = (props: Props) => {
-  return <div>Welcome to Twitter</div>;
+  return (
+    <div className="h-screen w-screen">
+      <div>Main</div>
+      <footer>Footer</footer>
+    </div>
+  );
 };
 
 export default welcome;
