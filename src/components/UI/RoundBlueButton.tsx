@@ -9,15 +9,18 @@ interface Props {
 }
 
 const RoundBlueButton = (props: Props) => {
+  const background = props.outline ? "transparent" : "blue.400";
   return (
     <Button
       width={props.width}
+      p={5}
       alignSelf="center"
-      bg="transparent"
-      _hover={{ bg: "blue.900" }}
+      bg={props.outline ? "transparent" : "blue.400"}
+      _hover={{ bg: props.outline ? "blue.900" : "blue.500" }}
       border="1px"
       borderColor="blue.400"
-      textColor="blue.400"
+      textColor={props.outline ? "blue.400" : "white"}
+      fontWeight="700"
       rounded="full"
     >
       {props.text}
