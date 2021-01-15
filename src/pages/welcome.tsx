@@ -44,7 +44,7 @@ const welcome = (props: Props) => {
           textColor="white"
           justifyContent="center"
         >
-          <Box
+          {/* <Box
             visibility={{ base: "hidden", md: "visible" }}
             pos="absolute"
             top={4}
@@ -53,7 +53,7 @@ const welcome = (props: Props) => {
             textAlign="center"
           >
             <TopLoginForm />
-          </Box>
+          </Box> */}
           <CentralCard />
         </Flex>
       </Flex>

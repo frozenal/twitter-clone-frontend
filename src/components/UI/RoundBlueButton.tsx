@@ -12,6 +12,7 @@ const RoundBlueButton = (props: Props) => {
   const background = props.outline ? "transparent" : "blue.400";
   return (
     <Button
+      type={props.submit ? "submit" : undefined}
       width={props.width}
       p={5}
       alignSelf="center"

@@ -7,9 +7,10 @@ interface Props {
   name: string;
   labelId: string;
   type: string;
+  ref: any;
 }
 
-const AccountFormField = (props: Props) => {
+const AccountFormField = React.forwardRef((props: Props, ref: any) => {
   const [fieldSelected, setFieldSelected] = useState(false);
 
   return (
@@ -50,9 +51,10 @@ const AccountFormField = (props: Props) => {
         type={props.type}
         onFocus={() => setFieldSelected(true)}
         onBlur={() => setFieldSelected(false)}
+        ref={ref}
       />
     </Box>
   );
-};
+});
 
 export default AccountFormField;
