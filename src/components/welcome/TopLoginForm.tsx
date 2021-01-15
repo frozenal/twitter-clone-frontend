@@ -1,7 +1,7 @@
 import { Box, Flex } from "@chakra-ui/react";
 import React from "react";
 import RoundBlueButton from "../UI/RoundBlueButton";
-import AccountFormField from "./AccountFormField";
+import AccountFormField from "../UI/AccountFormField";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";

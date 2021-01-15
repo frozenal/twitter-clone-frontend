@@ -18,16 +18,15 @@ const AccountFormField = React.forwardRef((props: Props, ref: any) => {
       width={props.width}
       height={16}
       border="1px"
-      borderColor={`${!fieldSelected ? "gray.500" : "blue.400"}`}
+      borderColor={`${!fieldSelected ? "gray.600" : "blue.400"}`}
       rounded="md"
       textAlign="left"
       px={2}
       pt={1}
-      mx={2}
       className="border-opacity-50"
     >
       <FormLabel
-        textColor={!fieldSelected ? "gray.400" : "blue.400"}
+        textColor={!fieldSelected ? "gray.500" : "blue.400"}
         opacity={70}
         mb={0}
         fontSize="sm"

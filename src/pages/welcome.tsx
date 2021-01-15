@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import TwitterIcon from "../components/svg/TwitterLogo";
 import RoundBlueButton from "../components/UI/RoundBlueButton";
-import AccountFormField from "../components/welcome/AccountFormField";
+import AccountFormField from "../components/UI/AccountFormField";
 import CentralCard from "../components/welcome/CentralCard";
 import CentralForm from "../components/welcome/CentralForm";
 import Footer from "../components/welcome/Footer";
