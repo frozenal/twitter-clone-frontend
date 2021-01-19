@@ -1,0 +1,10 @@
+query getAllTweets {
+  tweets {
+    id
+    content
+    author {
+      id
+      handle
+    }
+  }
+}

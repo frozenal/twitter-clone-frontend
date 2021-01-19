@@ -5,38 +5,58 @@ import AccountFormField from "../UI/AccountFormField";
 import RoundBlueButton from "../UI/RoundBlueButton";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useLoginMutation } from "../../generated/graphql";
+import { useRouter } from "next/router";
 
 interface Props {}
 
 interface LoginFormData {
-  phoneEmailOrUsername: string;
+  handleOrEmail: string;
   password: string;
 }
 
 const LoginForm = (props: Props) => {
   const { handleSubmit, register, errors, setError } = useForm<LoginFormData>();
 
+  const router = useRouter();
+
+  const [login] = useLoginMutation();
+
   return (
     <Box w="35rem" h="auto">
       <form
         onSubmit={handleSubmit(async (formData) => {
-          console.log(formData);
-          console.log(errors);
+          const response = await login({
+            variables: {
+              handleOrEmail: formData.handleOrEmail,
+              password: formData.password,
+            },
+          });
+          if (response.data?.login.errors) {
+            setError(
+              response.data.login.errors[0].field as
+                | "handleOrEmail"
+                | "password",
+              {
+                type: "manual",
+                message: response.data.login.errors[0].message,
+              }
+            );
+          } else if (response.data?.login.user) {
+            router.push("/home");
+          }
         })}
       >
         <Flex flexDir="column" alignItems="center" justifyContent="center">
           <Box py={3} px={2} w="100%">
             <AccountFormField
               width="100%"
-              label="Phone, email, or username"
-              name="phoneEmailOrUsername"
-              labelId="phoneEmailOrUsername"
+              label="Email or username"
+              name="handleOrEmail"
+              labelId="handleOrEmail"
               type="text"
               ref={register({ required: true })}
-              errors={
-                errors.phoneEmailOrUsername &&
-                "Phone, email, or username required."
-              }
+              errors={errors.handleOrEmail && "Email or username required."}
             />
           </Box>
           <Box mt={2} py={3} px={2} w="100%">
