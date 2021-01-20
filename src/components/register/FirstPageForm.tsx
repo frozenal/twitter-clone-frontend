@@ -1,12 +1,33 @@
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import React from "react";
 import AccountFormField from "../UI/AccountFormField";
+import { useForm } from "react-hook-form";
+import RoundBlueButton from "../UI/RoundBlueButton";
+import { UserData } from "./RegisterModal";
 
-interface Props {}
+interface Props {
+  handleDataChange: (data: UserData) => void;
+}
+
+interface formData {
+  username: string;
+  email: string;
+  password: string;
+}
 
 const FirstPageForm = (props: Props) => {
+  const { handleSubmit, register, errors, setError } = useForm<formData>();
+
   return (
-    <form>
+    <form
+      onSubmit={handleSubmit((formData) => {
+        const { username, password, email } = formData;
+        props.handleDataChange({ username, password, email, bio: "" });
+      })}
+    >
+      <Box position="absolute" right={3} top="12.5px" textColor="white">
+        <RoundBlueButton submit={true} text="Next" outline={false} />
+      </Box>
       <Flex
         flexDir="column"
         w="100%"
@@ -31,6 +52,7 @@ const FirstPageForm = (props: Props) => {
             name="username"
             labelId="username"
             inputType="text"
+            ref={register()}
           />
         </Box>
         <Box w="100%" mb={8}>
@@ -40,6 +62,7 @@ const FirstPageForm = (props: Props) => {
             name="email"
             labelId="email"
             inputType="text"
+            ref={register()}
           />
         </Box>
         <Box w="100%" mb={24}>
@@ -63,6 +86,7 @@ const FirstPageForm = (props: Props) => {
             labelId="password"
             width="100%"
             inputType="password"
+            ref={register()}
           />
         </Box>
       </Flex>

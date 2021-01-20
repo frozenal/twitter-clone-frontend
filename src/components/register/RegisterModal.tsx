@@ -8,7 +8,7 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import TwitterIcon from "../svg/TwitterLogo";
 import RoundBlueButton from "../UI/RoundBlueButton";
 import FirstPageForm from "./FirstPageForm";
@@ -18,7 +18,34 @@ interface Props {
   onClose: () => void;
 }
 
+export interface UserData {
+  username: string;
+  email: string;
+  password: string;
+  bio: string;
+}
+
 const RegisterModal = (props: Props) => {
+  const [page, setPage] = useState(1);
+
+  const [userData, setUserData] = useState<UserData>({
+    username: "",
+    email: "",
+    password: "",
+    bio: "",
+  });
+
+  const handleUserDataChange = (data: UserData) => {
+    const newData: UserData = {
+      username: data.username ? data.username : "",
+      password: data.password ? data.password : "",
+      email: data.email ? data.email : "",
+      bio: data.bio ? data.bio : "",
+    };
+    setUserData(newData);
+    setPage(2);
+  };
+
   return (
     <Modal
       isOpen={props.isOpen}
@@ -39,12 +66,12 @@ const RegisterModal = (props: Props) => {
           >
             <TwitterIcon height={35} width={35} />
           </Flex>
-          <Box position="absolute" right={3} top="12.5px" textColor="white">
-            <RoundBlueButton submit={false} text="Next" outline={false} />
-          </Box>
         </ModalHeader>
         <ModalBody>
-          <FirstPageForm />
+          {page == 1 && (
+            <FirstPageForm handleDataChange={handleUserDataChange} />
+          )}
+          {page == 2 && <Box>Confirm email page</Box>}
         </ModalBody>
       </ModalContent>
     </Modal>
