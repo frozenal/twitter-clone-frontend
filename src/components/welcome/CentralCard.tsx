@@ -1,4 +1,4 @@
-import { Flex, Box, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading } from "@chakra-ui/react";
 import React from "react";
 import TwitterIcon from "../svg/TwitterLogo";
 import CentralForm from "./CentralForm";

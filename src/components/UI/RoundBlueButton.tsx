@@ -6,12 +6,14 @@ interface Props {
   text: string;
   width?: string;
   outline: boolean;
+  onClick?: any;
 }
 
 const RoundBlueButton = (props: Props) => {
   const background = props.outline ? "transparent" : "blue.400";
   return (
     <Button
+      onClick={props.onClick ? props.onClick : undefined}
       type={props.submit ? "submit" : undefined}
       width={props.width}
       p={5}

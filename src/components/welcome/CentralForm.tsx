@@ -1,22 +1,25 @@
-import { Flex, Link, Box } from "@chakra-ui/react";
+import { Box, Flex, Link, useDisclosure } from "@chakra-ui/react";
 import React from "react";
+import RegisterModal from "../register/RegisterModal";
 import RoundBlueButton from "../UI/RoundBlueButton";
 
 interface Props {}
 
 const CentralForm = (props: Props) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Flex flexDir="column">
-      <Link _hover={undefined} href="/signup">
-        <Box mb={3}>
-          <RoundBlueButton
-            outline={false}
-            submit={false}
-            text="Sign up"
-            width="100%"
-          />
-        </Box>
-      </Link>
+      <Box mb={3}>
+        <RoundBlueButton
+          onClick={onOpen}
+          outline={false}
+          submit={false}
+          text="Sign up"
+          width="100%"
+        />
+      </Box>
+      <RegisterModal isOpen={isOpen} onClose={onClose} />
       <Link _hover={undefined} href="/login">
         <Box mb={3}>
           <RoundBlueButton

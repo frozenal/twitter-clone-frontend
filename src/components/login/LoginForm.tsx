@@ -33,6 +33,7 @@ const LoginForm = (props: Props) => {
             },
           });
           if (response.data?.login.errors) {
+            console.log(response.data.login.errors);
             setError(
               response.data.login.errors[0].field as
                 | "handleOrEmail"
@@ -42,6 +43,7 @@ const LoginForm = (props: Props) => {
                 message: response.data.login.errors[0].message,
               }
             );
+            console.log(errors);
           } else if (response.data?.login.user) {
             router.push("/home");
           }
@@ -54,9 +56,9 @@ const LoginForm = (props: Props) => {
               label="Email or username"
               name="handleOrEmail"
               labelId="handleOrEmail"
-              type="text"
+              inputType="text"
               ref={register({ required: true })}
-              errors={errors.handleOrEmail && "Email or username required."}
+              errors={errors.handleOrEmail && errors.handleOrEmail.message}
             />
           </Box>
           <Box mt={2} py={3} px={2} w="100%">
@@ -65,9 +67,9 @@ const LoginForm = (props: Props) => {
               label="Password"
               name="password"
               labelId="password"
-              type="password"
+              inputType="password"
               ref={register({ required: true })}
-              errors={errors.password && "Password required."}
+              errors={errors.password && errors.password.message}
             />
           </Box>
           <Box mt={2} py={3} px={2} w="100%">

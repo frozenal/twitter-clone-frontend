@@ -5,7 +5,6 @@ import AccountFormField from "../UI/AccountFormField";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
-// import { yupResolver } from "@hookform/resolvers/yup";
 
 interface Props {}
 
@@ -51,7 +50,7 @@ const TopLoginForm = (props: Props) => {
           label="Phone, email, or username"
           name="phoneEmailUsername"
           labelId="phoneEmailUsername"
-          type="text"
+          inputType="text"
           ref={register({})}
         />
         <AccountFormField
@@ -59,7 +58,7 @@ const TopLoginForm = (props: Props) => {
           label="Password"
           name="password"
           labelId="password"
-          type="password"
+          inputType="password"
           ref={register({})}
         />
         <RoundBlueButton
