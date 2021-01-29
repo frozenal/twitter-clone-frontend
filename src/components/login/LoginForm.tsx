@@ -57,6 +57,7 @@ const LoginForm = (props: Props) => {
               name="handleOrEmail"
               labelId="handleOrEmail"
               inputType="text"
+              fieldType="text"
               ref={register({ required: true })}
               errors={errors.handleOrEmail && errors.handleOrEmail.message}
             />
@@ -68,6 +69,7 @@ const LoginForm = (props: Props) => {
               name="password"
               labelId="password"
               inputType="password"
+              fieldType="text"
               ref={register({ required: true })}
               errors={errors.password && errors.password.message}
             />

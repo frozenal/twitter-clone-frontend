@@ -8,10 +8,13 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import { useRegisterMutation } from "../../generated/graphql";
 import TwitterIcon from "../svg/TwitterLogo";
 import RoundBlueButton from "../UI/RoundBlueButton";
 import FirstPageForm from "./FirstPageForm";
+import { SecondPageForm } from "./SecondPageForm";
 
 interface Props {
   isOpen: boolean;
@@ -19,14 +22,18 @@ interface Props {
 }
 
 export interface UserData {
-  username: string;
-  email: string;
-  password: string;
-  bio: string;
+  username?: string;
+  email?: string;
+  password?: string;
+  bio?: string;
 }
 
 const RegisterModal = (props: Props) => {
   const [page, setPage] = useState(1);
+
+  const [submit, setSubmit] = useState(false);
+
+  const [register] = useRegisterMutation();
 
   const [userData, setUserData] = useState<UserData>({
     username: "",
@@ -35,15 +42,50 @@ const RegisterModal = (props: Props) => {
     bio: "",
   });
 
-  const handleUserDataChange = (data: UserData) => {
+  useEffect(() => {
+    if (submit) {
+      setSubmit(false);
+      registerUser();
+    }
+  });
+
+  const router = useRouter();
+
+  const handleUserDataChange = (data: UserData, submit: boolean = false) => {
     const newData: UserData = {
-      username: data.username ? data.username : "",
-      password: data.password ? data.password : "",
-      email: data.email ? data.email : "",
-      bio: data.bio ? data.bio : "",
+      username: data.username ? data.username : userData.username,
+      password: data.password ? data.password : userData.password,
+      email: data.email ? data.email : userData.email,
+      bio: data.bio ? data.bio : userData.bio,
     };
     setUserData(newData);
-    setPage(2);
+    if (submit) {
+      setSubmit(true);
+    } else {
+      setPage(2);
+    }
+  };
+
+  const registerUser = async () => {
+    const response = await register({
+      variables: {
+        email: userData.email!,
+        password: userData.password!,
+        bio: userData.bio,
+        username: userData.username!,
+      },
+    });
+
+    console.log(response.data?.register);
+
+    if (response.data?.register.errors) {
+      alert(
+        `There is an error in field ${response.data.register.errors[0].field}: ${response.data.register.errors[0].message}`
+      );
+      router.reload();
+    } else if (response.data?.register.user) {
+      router.push("/home");
+    }
   };
 
   return (
@@ -71,7 +113,9 @@ const RegisterModal = (props: Props) => {
           {page == 1 && (
             <FirstPageForm handleDataChange={handleUserDataChange} />
           )}
-          {page == 2 && <Box>Confirm email page</Box>}
+          {page == 2 && (
+            <SecondPageForm handleDataChange={handleUserDataChange} />
+          )}
         </ModalBody>
       </ModalContent>
     </Modal>

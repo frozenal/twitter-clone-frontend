@@ -6,13 +6,14 @@ import RoundBlueButton from "../UI/RoundBlueButton";
 import { UserData } from "./RegisterModal";
 
 interface Props {
-  handleDataChange: (data: UserData) => void;
+  handleDataChange: (data: UserData, submit: boolean) => void;
 }
 
 interface formData {
   username: string;
   email: string;
   password: string;
+  confirmPassword: string;
 }
 
 const FirstPageForm = (props: Props) => {
@@ -21,12 +22,24 @@ const FirstPageForm = (props: Props) => {
   return (
     <form
       onSubmit={handleSubmit((formData) => {
-        const { username, password, email } = formData;
-        props.handleDataChange({ username, password, email, bio: "" });
+        console.log(formData);
+        if (formData.confirmPassword != formData.password) {
+          setError("confirmPassword", {
+            message: "The passwords do not match. ",
+          });
+        } else {
+          const { username, password, email } = formData;
+          props.handleDataChange({ username, password, email, bio: "" }, false);
+        }
       })}
     >
       <Box position="absolute" right={3} top="12.5px" textColor="white">
         <RoundBlueButton submit={true} text="Next" outline={false} />
+      </Box>
+      <Box position="absolute" left={3} top="12.5px" textColor="white">
+        <Heading as="h3" size="md">
+          Page 1 of 2
+        </Heading>
       </Box>
       <Flex
         flexDir="column"
@@ -52,7 +65,9 @@ const FirstPageForm = (props: Props) => {
             name="username"
             labelId="username"
             inputType="text"
-            ref={register()}
+            fieldType="text"
+            ref={register({ required: "Please enter your username. " })}
+            errors={errors.username?.message}
           />
         </Box>
         <Box w="100%" mb={8}>
@@ -62,7 +77,9 @@ const FirstPageForm = (props: Props) => {
             name="email"
             labelId="email"
             inputType="text"
-            ref={register()}
+            fieldType="text"
+            ref={register({ required: "Please enter your email. " })}
+            errors={errors.email?.message}
           />
         </Box>
         <Box w="100%" mb={24}>
@@ -80,13 +97,40 @@ const FirstPageForm = (props: Props) => {
             Make this secure! We'd recommend using a mix of characters, numbers,
             and symbols. Password must be above 8 characters long.
           </Text>
+          <Box mb={6}>
+            <AccountFormField
+              label="Password"
+              name="password"
+              labelId="password"
+              width="100%"
+              inputType="password"
+              fieldType="text"
+              ref={register({
+                required: "Please enter your password. ",
+                minLength: {
+                  value: 8,
+                  message: "Password must be longer than 8 characters.",
+                },
+              })}
+              errors={errors.password?.message}
+            />
+          </Box>
+
           <AccountFormField
-            label="Password"
-            name="password"
-            labelId="password"
+            label="Confirm Password"
+            name="confirmPassword"
+            labelId="confirmPassword"
             width="100%"
             inputType="password"
-            ref={register()}
+            fieldType="text"
+            ref={register({
+              required: "Please confirm your password. ",
+              minLength: {
+                value: 8,
+                message: "Password must be longer than 8 characters.",
+              },
+            })}
+            errors={errors.confirmPassword?.message}
           />
         </Box>
       </Flex>

@@ -1,6 +1,6 @@
 import { Box, Flex, Heading } from "@chakra-ui/react";
 import React from "react";
-import TwitterIcon from "../svg/TwitterLogo";
+import TwitterIcon from "../../components/svg/TwitterLogo";
 import CentralForm from "./CentralForm";
 
 interface Props {}
