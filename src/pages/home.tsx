@@ -2,6 +2,8 @@ import React from "react";
 import { initializeApollo } from "../utils/apollo";
 import { useGetAllTweetsQuery } from "../generated/graphql";
 import { gql, useQuery } from "@apollo/client";
+import { Box, Flex } from "@chakra-ui/react";
+import Sidebar from "../components/home/sidebar";
 
 const GET_TWEETS_QUERY = gql`
   query getAllTweets {
@@ -23,16 +25,24 @@ const home = (props: Props) => {
 
   if (loading) return <div>loading...</div>;
 
-  console.log(data?.tweets);
-
   return (
-    <div>
-      {data?.tweets.map((tweet) => (
-        <div>
-          {tweet.id}, {tweet.content}{" "}
-        </div>
-      ))}
-    </div>
+    <Flex
+      flexDir="row"
+      w="100vw"
+      h="100vh"
+      bg="black"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <Sidebar />
+    </Flex>
+    // <div>
+    //   {data?.tweets.map((tweet) => (
+    //     <div>
+    //       {tweet.id}, {tweet.content}{" "}
+    //     </div>
+    //   ))}
+    // </div>
   );
 };
 
